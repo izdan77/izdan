@@ -137,74 +137,115 @@
 
   <script>
     const members = {
-  bappa: [
-    "Kaafa", "Maama", "Dhombe", "Iss", "Thithibe",
-    "Thuthube", "Thuththonbe", "Beybe", "Bappa",
-    "Dhontha", "Thotho",
-    "Dhaidhombe", "Kudadhonthi", "Thutha", "Azaanbe",
-    "Hanaadhatha", "Zuhadhatha", "Maahil Beybe", "Saaradhatha",
-    "Nooh Beybe", "Airadhatha", "Zivian Kokko", "Zivia Kokko", "Zaaldhombe"
-  ],
+      bappa: [
+        "Kaafa", "Maama", "Dhombe", "Iss", "Thithibe",
+        "Thuthube", "Thuththonbe", "Beybe", "Bappa",
+        "Dhontha", "Thotho",
+        "Dhaidhombe", "Kudadhonthi", "Thutha", "Azaanbe",
+        "Hanaadhatha", "Zuhadhatha", "Maahil Beybe", "Saaradhatha",
+        "Nooh Beybe", "Airadhatha", "Zivian Kokko", "Zivia Kokko", "Zaaldhombe"
+      ],
       mammi: [
         "Mami1", "Mami2", "Mami3", "Mami4", "Mami5",
         "Mami6", "Mami7", "Mami8"
       ]
     };
-
+  
     function getImageFileName(name) {
-  const customImages = {
-    "Kaafa": "kaafa.png",
-    "Maama": "maama.png",
-    "Dhombe": "dhombe.png",
-    "Dhaidhombe": "dhaidhombe.png",
-    "Iss": "iss.png",
-    "Thutha": "thutha.png",
-    "Thithibe": "thithibe.png",
-    "Azaanbe": "azaanbe.png",
-    "Hanaadhatha": "hanaadhatha.png",
-    "Bappa": "bappa.png",
-    "Thotho": "thotho.png"
-  };
-  return customImages[name] || `${name}.jpg`;
-}
-
-
+      const customImages = {
+        "Kaafa": "kaafa.png",
+        "Maama": "maama.png",
+        "Dhombe": "dhombe.png",
+        "Dhaidhombe": "dhaidhombe.png",
+        "Iss": "iss.png",
+        "Thutha": "thutha.png",
+        "Thithibe": "thithibe.png",
+        "Azaanbe": "azaanbe.png",
+        "Hanaadhatha": "hanaadhatha.png",
+        "Bappa": "bappa.png",
+        "Thotho": "thotho.png"
+      };
+      return customImages[name] || `${name}.jpg`;
+    }
+  
     function openFamily(family) {
       document.getElementById("homePage").style.display = "none";
       document.getElementById("familyPage").style.display = "flex";
       document.getElementById("familyTitle").textContent =
         family === "bappa" ? "Bappa Family" : "Mammi Family";
-
+  
       const cardGrid = document.getElementById("cardGrid");
       cardGrid.innerHTML = "";
-
+  
       members[family].forEach(name => {
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
-        <img src="${getImageFileName(name)}" alt="${name}" onclick="playSound('${name}')" />
+          <img src="${getImageFileName(name)}" alt="${name}" onclick="playSound('${name}')" />
           <div class="card-name">${name}</div>
         `;
         cardGrid.appendChild(card);
       });
     }
-
+  
     function goBack() {
       document.getElementById("homePage").style.display = "block";
       document.getElementById("familyPage").style.display = "none";
     }
-
+  
+    const soundMap = {
+      "Kaafa": "kaafa.mp3",
+      "Maama": "maama.mp3",
+      "Dhombe": "dhombe.mp3",
+      "Dhaidhombe": "dhaidhombe.mp3",
+      "Iss": "iss.mp3",
+      "Thutha": "thutha.mp3",
+      "Thithibe": "thithibe.mp3",
+      "Azaanbe": "azaanbe.mp3",
+      "Hanaadhatha": "hanaadhatha.mp3",
+      "Bappa": "bappa.mp3",
+      "Thotho": "thotho.mp3",
+      "Zuhadhatha": "zuhadhatha.mp3",
+      "Maahil Beybe": "maahil_beybe.mp3",
+      "Saaradhatha": "saaradhatha.mp3",
+      "Nooh Beybe": "nooh_beybe.mp3",
+      "Airadhatha": "airadhatha.mp3",
+      "Zivian Kokko": "zivian_kokko.mp3",
+      "Zivia Kokko": "zivia_kokko.mp3",
+      "Zaaldhombe": "zaaldhombe.mp3",
+      "Thuthube": "thuthube.mp3",
+      "Thuththonbe": "thuththonbe.mp3",
+      "Beybe": "beybe.mp3",
+      "Dhontha": "dhontha.mp3",
+      "Kudadhonthi": "kudadhonthi.mp3",
+      "Mami1": "mami1.mp3",
+      "Mami2": "mami2.mp3",
+      "Mami3": "mami3.mp3",
+      "Mami4": "mami4.mp3",
+      "Mami5": "mami5.mp3",
+      "Mami6": "mami6.mp3",
+      "Mami7": "mami7.mp3",
+      "Mami8": "mami8.mp3"
+      // ➕ Add more if needed
+    };
+  
     function playSound(name) {
-  const audio = new Audio(name + ".mp3");
-  audio.load();
-  audio.play().then(() => {
-    console.log(name + " is playing");
-  }).catch((error) => {
-    console.error("Error playing audio:", error);
-    alert("Could not play audio. Tap again or check browser permissions.");
-  });
-}
-
+      const soundFile = soundMap[name];
+      if (!soundFile) {
+        alert("Sound not found for: " + name);
+        return;
+      }
+  
+      const audio = new Audio(soundFile);
+      audio.load();
+      audio.play().then(() => {
+        console.log(name + " is playing");
+      }).catch((error) => {
+        console.error("Error playing audio:", error);
+        alert("Could not play audio. Tap again or check browser permissions.");
+      });
+    }
   </script>
+  
 </body>
 </html>

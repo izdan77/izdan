@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Family Soundboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #e0f7fa, #fff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 960px;
+    }
+
+    .home {
+      text-align: center;
+      padding-top: 60px;
+    }
+
+    .title {
+      font-size: 2.8em;
+      color: #00796b;
+      margin-bottom: 40px;
+    }
+
+    .home button {
+      padding: 20px 40px;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 12px;
+      margin: 10px;
+      background: #00796b;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .home button:hover {
+      background: #004d40;
+    }
+
+    .family-page {
+      display: none;
+      flex-direction: column;
+    }
+
+    .back-btn {
+      margin-bottom: 20px;
+      background: none;
+      border: none;
+      font-size: 1.1em;
+      color: #00796b;
+      cursor: pointer;
+    }
+
+    .family-title {
+      text-align: center;
+      font-size: 2em;
+      color: #004d40;
+      margin-bottom: 20px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .card-name {
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 2em;
+      }
+
+      .home button {
+        width: 80%;
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Home Page -->
+    <div class="home" id="homePage">
+      <div class="title">Choose Your Family</div>
+      <button onclick="openFamily('bappa')">BAPPA FAMILY</button>
+      <button onclick="openFamily('mammi')">MAMMI FAMILY</button>
+    </div>
+
+    <!-- Family Page -->
+    <div class="family-page" id="familyPage">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <div class="family-title" id="familyTitle">Family</div>
+      <div class="card-grid" id="cardGrid"></div>
+    </div>
+  </div>
+
+  <script>
+    const members = {
+  bappa: [
+    "Kaafa", "Maama", "Dhombe", "Iss", "Thithibe",
+    "Thuthube", "Thuththonbe", "Beybe", "Bappa",
+    "Dhontha", "Thotho",
+    "Dhaidhombe", "Kudadhonthi", "Thutha", "Azaanbe",
+    "Hanaadhatha", "Zuhadhatha", "Maahil Beybe", "Saaradhatha",
+    "Nooh Beybe", "Airadhatha", "Zivian Kokko", "Zivia Kokko", "Zaaldhombe"
+  ],
+      mammi: [
+        "Mami1", "Mami2", "Mami3", "Mami4", "Mami5",
+        "Mami6", "Mami7", "Mami8"
+      ]
+    };
+
+    function getImageFileName(name) {
+  const customImages = {
+    "Kaafa": "kaafa.png",
+    "Maama": "maama.png",
+    "Dhombe": "dhombe.png",
+    "Dhaidhombe": "dhaidhombe.png",
+    "Iss": "iss.png",
+    "Thutha": "thutha.png",
+    "Thithibe": "thithibe.png",
+    "Azaanbe": "azaanbe.png",
+    "Hanaadhatha": "hanaadhatha.png",
+    "Bappa": "bappa.png",
+    "Thotho": "thotho.png"
+  };
+  return customImages[name] || `${name}.jpg`;
+}
+
+
+    function openFamily(family) {
+      document.getElementById("homePage").style.display = "none";
+      document.getElementById("familyPage").style.display = "flex";
+      document.getElementById("familyTitle").textContent =
+        family === "bappa" ? "Bappa Family" : "Mammi Family";
+
+      const cardGrid = document.getElementById("cardGrid");
+      cardGrid.innerHTML = "";
+
+      members[family].forEach(name => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+        <img src="${getImageFileName(name)}" alt="${name}" onclick="playSound('${name}')" />
+          <div class="card-name">${name}</div>
+        `;
+        cardGrid.appendChild(card);
+      });
+    }
+
+    function goBack() {
+      document.getElementById("homePage").style.display = "block";
+      document.getElementById("familyPage").style.display = "none";
+    }
+
+    function playSound(name) {
+      const audio = new Audio(name + ".m4a");
+      audio.play();
+    }
+  </script>
+</body>
+</html>
